@@ -12,12 +12,12 @@ angular.module('meanGarden', ['ui.router', 'ngMap'])
         })
 
         .state('garden-new', {
-          url: '/gardens/new',
+          url: '/gardens',
           templateUrl: 'garden-new.html',
           controller: 'NewGardenCtrl'
         }),
 
-      $urlRouterProvider.otherwise('home');
+      $urlRouterProvider.otherwise('/');
     }
   ]);
 

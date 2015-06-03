@@ -1,32 +1,45 @@
 angular.module('meanGarden')
 
-	.controller('NewGardenCtrl', function ($scope, $http, 'Gardens') {
+	// .controller('NewGardenCtrl', function ($scope, $http) {
+
+	// 	var gardens = [];
+
+	// 	//adds garden to page
+	// 	$scope.addGarden = function(){
+	// 	  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+	// 	};
 			
-		var gardens = [];
+	// 	// //creates new garden, also located in routes folder (?)
+	// 	// $scope.createGarden = function () {
+	// 	// 	var garden = new Garden(req.body);
 
-		$scope.createGarden = function () {
+	// 	// 	garden.save(function(err, status, data) {
+	// 	// 	// 		if (err) {
+	// 	// 	// 			console.log(status)
+	// 	// 	// 		} else {
+	// 	// 	// 			console.log(data);
+	// 	// 	// 		}
+	// 	// 	// });
+	// 	// };
 
-		var garden = new.Garden(req.body);
-		$scope.gardens.push(garden);
-
-		$http.post('/api/gardens', ($scope.garden}.
-			  success(function(data) {
-			    console.log(data)
-			  }).
-			  error(function(status) {
-			    console.log(status)
-			  });
-
-		// garden.$save(function(response) {		
-		// 		$location.path('api/gardens' + response._id);
-		// 		$scope.garden = '';
-		// 		}, 
-
-		// 		function(errorResponse) {
-		// 		$scope.error = errorResponse.data.message;
-		// 		}
-		// });
-		});						
+	// 	//post to db - where does this actually go?
+	// 	// $http.post('/gardens', {'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+	// 	// 	$scope.garden = '';
+			  
+	// 		 //  .success(function(data){
+	// 		 //    console.log(data);
+	// 		 //  });				  
+	// 		 //  .error(function(status){
+	// 		 //    console.log(status);
+	// 			// });  
+	// 	// };
+			
+	// 		// get from db
+	// 		// $http.get('/gardens').success(function(allGardens) {
+	// 		//      $scope.allGardens = allGardens;
+	// 	  //   	});
+	//  })							
+				
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 

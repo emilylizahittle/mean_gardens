@@ -1,0 +1,35 @@
+
+Garden CRUD
+	create
+		Client
+			angular route - app.js "/gardens/new"
+			template - form <form ng-submit="createGarden()">
+			NewGardenCtrl - $scope.createGarden = function() {}
+			$http.post('/api/gardens', $scope.garden).success(function(data){ console.log(data) })
+		Server
+			set app.post('/api/gardens', function(req, res) {})
+			var garden = Garden.save(req.body.garden)
+			res.status(200).json(garden)
+	Read (index) GET "/gardens"
+	Read (show) GET "/gardens/:id"
+
+
+Message CRUD
+	garden.email
+	your email?
+	subject
+	body
+
+
+
+------------------------------
+
+DONE add boostrap - CDN
+	navbar
+	container
+		row
+			col-sm-6 | col-sm-6
+placeholder "map"
+ng-repeat="garden in gardens" (gardens = hard coded in controller, name, address, lat, lng)
+
+

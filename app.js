@@ -10,9 +10,9 @@ var app = express();
 var mongoose = require('mongoose');
 
 // connect MongoDB
-mongoose.connect('mongodb://localhost/news', function(err,db){
+mongoose.connect('mongodb://localhost/gardens', function(err,db){
     if (!err){
-        console.log('Connected to /news!');
+        console.log('Connected to /gardens!');
     } else{
         console.dir(err); //failed to connect
     }

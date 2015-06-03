@@ -7,15 +7,21 @@ angular.module('meanGarden', ['ui.router', 'ngMap'])
       $stateProvider
         .state('garden-index', {
           url: '/',
-          templateUrl: 'garden-index.html',
+          templateUrl: '../templates/garden-index.html',
           controller: 'GardenIndexCtrl'
         })
 
         .state('gardens-new', {
-          url: '/',
-          templateUrl: 'garden-new.html',
+          url: '/gardens/new',
+          templateUrl: '../templates/garden-new.html',
           controller: 'NewGardenCtrl'
-        }),
+        })
+        
+        // .state('gardens', {
+        //   url: '/gardens/:id',
+        //   templateUrl: '/garden-show.html',
+        //   controller: 'GardenShowCtrl'
+        // });
 
       $urlRouterProvider.otherwise('/');
     }

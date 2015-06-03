@@ -1,45 +1,79 @@
 angular.module('meanGarden')
 
+				
+	// .factory('gardens', ['$http', function(){
+	//   var g = {
+	//     gardens: [{ name:'Dreaming Gardens', address: '5712 32nd Ave', lat: '38', lng: '-129' }]
+	//   };
+	//   g.getAll = function() {
+ //    	return $http.get('/gardens').success(function(data){
+ //      angular.copy(data, g.gardens);
+ //    })
+	// }])
+
+	.controller('GardensShowCtrl', ['$scope','$stateParams','gardens', function($scope, $stateParams, gardens){
+		$scope.garden = gardens.gardens[$stateParams.id];
+	}])
+	
 	.controller('NewGardenCtrl', function ($scope, $http) {
 		var gardens = [];
 
-		//adds garden to page
+		var request = $http.post('api/', garden);
+
+			request.success(function (data) {
+			    console.log(data); 
+			});
+
+			request.error(function (data) {
+			    console.log(data);
+			})
+				
 		$scope.addGarden = function(){
-		  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-		};
-	})
+			if(!$scope.name || $scope.name === '') { return; }
+	  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});	
+		}
 
-	// 	// //creates new garden, also located in routes folder (?)
-	// 	// $scope.createGarden = function () {
-	// 	// 	var garden = new Garden(req.body);
+		$scope.removeGarden = function(item) { 
+		  var index = $scope.gardens.indexOf(item);
+		  $scope.gardens.splice(index, 1);     
+		}
+	 	
+	//  	$scope.getAll = function() {
+ //    	return $http.get('/gardens').success(function(data){
+ //      angular.copy(data, $scope.gardens);
+	//  	});
+ //    }	
+	// })
+	 	 
+	//creates new garden, also located in routes folder (?)
+	// $scope.createGarden = function () {
+	// 	var garden = new Garden(req.body);
 
-	// 	// 	garden.save(function(err, status, data) {
-	// 	// 	// 		if (err) {
-	// 	// 	// 			console.log(status)
-	// 	// 	// 		} else {
-	// 	// 	// 			console.log(data);
-	// 	// 	// 		}
-	// 	// 	// });
-	// 	// };
+	// 	garden.save(function(err, status, data) {
+	// 	// 		if (err) {
+	// 	// 			console.log(status);
+	// 	// 		} else {
+	// 	// 			console.log(data);
+	// 	// 		};
+	// 	// })
+	// }
 
-	// 	//post to db 
-	// 	// $http.post('/gardens', {'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-	// 	// 	$scope.garden = '';
-			  
-	// 		 //  .success(function(data){
-	// 		 //    console.log(data);
-	// 		 //  });				  
-	// 		 //  .error(function(status){
-	// 		 //    console.log(status);
-	// 			// });  
-	// 	// };
-			
+		//post to db 
+		$scope.garden = {};
+		$http.post('/api/gardens', $scope.garden)
+		  .success(function(data){
+		  	// $scope.garden = data;
+		    console.log(data);
+		  })
+		  .error(function(status){
+		    console.log(status);
+			});  			
 	// 		// get from db
 	// 		// $http.get('/gardens').success(function(allGardens) {
 	// 		//      $scope.gardens = allGardens;
 	// 	  //   	});
 	//  })							
-				
+	})
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 
@@ -75,8 +109,21 @@ angular.module('meanGarden')
 
 		
 			$scope.addGarden = function(){
+				if(!$scope.name || $scope.name === '') { return; }
 		  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-			};
+			}
+
+			$scope.removeGarden = function(item) { 
+			  var index = $scope.gardens.indexOf(item);
+			  $scope.gardens.splice(index, 1);     
+			}
+
+			$scope.getAll = function() {
+	    	return $http.get('/api/gardens').success(function(data){
+	      angular.copy(data, $scope.gardens);
+		 	});
+    
+    }	
 
 	});
 

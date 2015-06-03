@@ -46,7 +46,37 @@
       </div>
   </div>
 
-</script>
 
+<br>
+  
+  <div>
+    <form ng-submit="addGarden()">
+      <!-- <p class="input-group"> -->
+        <div>
+          <label>Garden Title</label>
+          <input type="text" class="form-control" ng-model="name" placeholder="Garden Tag Line">
+          <span class="help-block"></span>
+
+          <label>Address</label>
+          <input type="text" class="form-control" ng-model="address" placeholder="testing">
+          <span class="help-block"></span>
+
+          <label>Latitude</label>
+          <input type="text" class="form-control" ng-model="lng" placeholder="testing">
+          <span class="help-block"></span>
+
+          <label>Longitude</label>
+          <input type="text" class="form-control" ng-model="lat" placeholder="testing">
+          <span class="help-block"></span>
+          
+          <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary">Add Garden</button>
+          </span>
+        </div>
+      <!-- </p>   -->
+    </form>
+  </div>
+</script>
+  
   </body>
 </html>

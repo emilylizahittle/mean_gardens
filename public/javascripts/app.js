@@ -11,8 +11,8 @@ angular.module('meanGarden', ['ui.router', 'ngMap'])
           controller: 'GardenIndexCtrl'
         })
 
-        .state('garden-new', {
-          url: '/gardens',
+        .state('gardens-new', {
+          url: '/',
           templateUrl: 'garden-new.html',
           controller: 'NewGardenCtrl'
         }),

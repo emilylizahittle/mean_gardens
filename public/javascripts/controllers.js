@@ -1,14 +1,14 @@
 angular.module('meanGarden')
 
-	// .controller('NewGardenCtrl', function ($scope, $http) {
+	.controller('NewGardenCtrl', function ($scope, $http) {
+		var gardens = [];
 
-	// 	var gardens = [];
+		//adds garden to page
+		$scope.addGarden = function(){
+		  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+		};
+	})
 
-	// 	//adds garden to page
-	// 	$scope.addGarden = function(){
-	// 	  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-	// 	};
-			
 	// 	// //creates new garden, also located in routes folder (?)
 	// 	// $scope.createGarden = function () {
 	// 	// 	var garden = new Garden(req.body);
@@ -22,7 +22,7 @@ angular.module('meanGarden')
 	// 	// 	// });
 	// 	// };
 
-	// 	//post to db - where does this actually go?
+	// 	//post to db 
 	// 	// $http.post('/gardens', {'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
 	// 	// 	$scope.garden = '';
 			  
@@ -36,23 +36,23 @@ angular.module('meanGarden')
 			
 	// 		// get from db
 	// 		// $http.get('/gardens').success(function(allGardens) {
-	// 		//      $scope.allGardens = allGardens;
+	// 		//      $scope.gardens = allGardens;
 	// 	  //   	});
 	//  })							
 				
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 
-	 		$scope.$on('mapInitialized', function(event, map) {
+	 	  $scope.$on('mapInitialized', function(event, map) {
 	      $scope.map = map;
 
 	    	angular.forEach($scope.gardens, function(value, key) {
-	       var marker = new google.maps.Marker({
-	         position: new google.maps.LatLng(value.lat, value.lng),
-	         map: $scope.map,
-	         title: value.name,
-	         optimized: false
-	       });
+		       var marker = new google.maps.Marker({
+		         position: new google.maps.LatLng(value.lat, value.lng),
+		         map: $scope.map,
+		         title: value.name,
+		         optimized: false
+		       });
 	  		})
 	    })
 
@@ -72,5 +72,11 @@ angular.module('meanGarden')
 			  	lng: "-122.439119"
 		  	}
 	  	];	  	
+
+		
+			$scope.addGarden = function(){
+		  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+			};
+
 	});
 

@@ -33,3 +33,4 @@ placeholder "map"
 ng-repeat="garden in gardens" (gardens = hard coded in controller, name, address, lat, lng)
 
 
+address > google maps search autocomplete (part of api)

@@ -1,58 +1,82 @@
 angular.module('meanGarden')
 
-	// .controller('NewGardenCtrl', function ($scope, $http) {
 
-	// 	var gardens = [];
+	.controller('GardensShowCtrl', ['$scope','$stateParams', function($scope, $stateParams){
+		$scope.garden = gardens.gardens[$stateParams.id];
+	}])
+	
+	.controller('NewGardenCtrl', function ($scope, $http) {
+		var gardens = [];
 
-	// 	//adds garden to page
-	// 	$scope.addGarden = function(){
-	// 	  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-	// 	};
-			
-	// 	// //creates new garden, also located in routes folder (?)
-	// 	// $scope.createGarden = function () {
-	// 	// 	var garden = new Garden(req.body);
+		var request = $http.post('api/gardens', garden);
 
-	// 	// 	garden.save(function(err, status, data) {
-	// 	// 	// 		if (err) {
-	// 	// 	// 			console.log(status)
-	// 	// 	// 		} else {
-	// 	// 	// 			console.log(data);
-	// 	// 	// 		}
-	// 	// 	// });
-	// 	// };
+			request.success(function (data) {
+			    console.log(data); 
+			});
 
-	// 	//post to db - where does this actually go?
-	// 	// $http.post('/gardens', {'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-	// 	// 	$scope.garden = '';
-			  
-	// 		 //  .success(function(data){
-	// 		 //    console.log(data);
-	// 		 //  });				  
-	// 		 //  .error(function(status){
-	// 		 //    console.log(status);
-	// 			// });  
-	// 	// };
-			
+			request.error(function (data) {
+			    console.log(data);
+			})
+				
+		$scope.addGarden = function(){
+			if(!$scope.name || $scope.name === '') { return; }
+	  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});	
+		}
+
+		$scope.removeGarden = function(item) { 
+		  var index = $scope.gardens.indexOf(item);
+		  $scope.gardens.splice(index, 1);     
+		}
+	 	
+	//  	$scope.getAll = function() {
+ //    	return $http.get('/gardens').success(function(data){
+ //      angular.copy(data, $scope.gardens);
+	//  	});
+ //    }	
+	// })
+	 	 
+	//creates new garden, also located in routes folder (?)
+	// $scope.createGarden = function () {
+	// 	var garden = new Garden(req.body);
+
+	// 	garden.save(function(err, status, data) {
+	// 	// 		if (err) {
+	// 	// 			console.log(status);
+	// 	// 		} else {
+	// 	// 			console.log(data);
+	// 	// 		};
+	// 	// })
+	// }
+
+		//post to db 
+		$scope.garden = {};
+		$http.post('/api/gardens', $scope.garden)
+		  .success(function(data){
+		  	// $scope.garden = data;
+		    console.log(data);
+		  })
+		  .error(function(status){
+		    console.log(status);
+			});  			
 	// 		// get from db
 	// 		// $http.get('/gardens').success(function(allGardens) {
-	// 		//      $scope.allGardens = allGardens;
+	// 		//      $scope.gardens = allGardens;
 	// 	  //   	});
 	//  })							
-				
+	})
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 
-	 		$scope.$on('mapInitialized', function(event, map) {
+	 	  $scope.$on('mapInitialized', function(event, map) {
 	      $scope.map = map;
 
 	    	angular.forEach($scope.gardens, function(value, key) {
-	       var marker = new google.maps.Marker({
-	         position: new google.maps.LatLng(value.lat, value.lng),
-	         map: $scope.map,
-	         title: value.name,
-	         optimized: false
-	       });
+		       var marker = new google.maps.Marker({
+		         position: new google.maps.LatLng(value.lat, value.lng),
+		         map: $scope.map,
+		         title: value.name,
+		         optimized: false
+		       });
 	  		})
 	    })
 
@@ -72,5 +96,24 @@ angular.module('meanGarden')
 			  	lng: "-122.439119"
 		  	}
 	  	];	  	
+
+		
+			$scope.addGarden = function(){
+				if(!$scope.name || $scope.name === '') { return; }
+		  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+			}
+
+			$scope.removeGarden = function(item) { 
+			  var index = $scope.gardens.indexOf(item);
+			  $scope.gardens.splice(index, 1);     
+			}
+
+			$scope.getAll = function() {
+	    	return $http.get('/api/gardens').success(function(data){
+	      angular.copy(data, $scope.gardens);
+		 	});
+    
+    }	
+
 	});
 

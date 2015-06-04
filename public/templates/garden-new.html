@@ -1,7 +1,18 @@
+
+<div class="col-sm-6">
+      <div class="list-group">
+        <div class='list-group-item' ng-repeat="garden in greatGardens">
+          <h5>{{garden.name}}</h5>
+          <p>{{garden.address}}: {{garden.lng}}, {{garden.lat}}</p>
+          <button type="button" ng-click="removeGarden(garden)">&times;</button></a></li>
+        </div>
+      </div>
+    </div>
+
 <form ng-submit="addGarden()">
   <p class="input-group">
     <div>
-      <label>Garden Title</label>
+      <label>Garden Title </label>
       <input type="text" class="form-control" ng-model="garden.name" placeholder="Garden Tag Line">
       <span class="help-block"></span>
 

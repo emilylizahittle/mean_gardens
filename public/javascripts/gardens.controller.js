@@ -2,7 +2,7 @@
 
 angular.module('meanGarden')
 
-.controller('GardenCrudCtrl', ['$scope', '$stateParams', '$location', 'Gardens',
+.controller('CrudGardenCtrl', ['$scope', '$stateParams', '$location', 'Gardens',
 	function($scope, $stateParams, $location, Gardens) {
 		
 		$scope.create = function() {
@@ -67,3 +67,61 @@ angular.module('meanGarden')
  //      angular.copy(data, g.gardens);
  //    })
 	// }])
+
+// .controller('NewGardenCtrl', function ($scope, $http) {
+	// 	var gardens = [];
+
+	// 	var request = $http.post('api/gardens', garden);
+	// 		request.success(function (data) {
+	// 		    console.log(data); 
+	// 		});
+	// 		request.error(function (data) {
+	// 		    console.log(data);
+	// 		})
+				
+	// 	$scope.addGarden = function(){
+	// 		if(!$scope.name || $scope.name === '') { return; }
+	//   	$scope.gardens.push({'$scope.garden'});	
+	// 	}
+
+	// 	$scope.removeGarden = function(item) { 
+	// 	  var index = $scope.gardens.indexOf(item);
+	// 	  $scope.gardens.splice(index, 1);     
+	// 	}
+	 	
+	//  	$scope.getAll = function() {
+ //    	return $http.get('/gardens').success(function(data){
+ //      angular.copy(data, $scope.gardens);
+	//  	});
+ //    }	
+	// })
+	 	 
+	//creates new garden, also located in routes folder (?)
+	// $scope.createGarden = function () {
+	// 	var garden = new Garden(req.body);
+
+	// 	garden.save(function(err, status, data) {
+	// 	// 		if (err) {
+	// 	// 			console.log(status);
+	// 	// 		} else {
+	// 	// 			console.log(data);
+	// 	// 		};
+	// 	// })
+	// }
+
+	// 	//post to db 
+	// 	$scope.garden = {};
+	// 	$http.post('/api/gardens', $scope.garden)
+	// 	  .success(function(data){
+	// 	  	// $scope.garden = data;
+	// 	    console.log(data);
+	// 	  })
+	// 	  .error(function(status){
+	// 	    console.log(status);
+	// 		});  			
+	// // 		// get from db
+	// 		// $http.get('/gardens').success(function(allGardens) {
+	// 		//      $scope.gardens = allGardens;
+	// 	  //   	});
+	//  })							
+	})

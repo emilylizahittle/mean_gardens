@@ -1,24 +1,14 @@
 angular.module('meanGarden')
 
-				
-	// .factory('gardens', ['$http', function(){
-	//   var g = {
-	//     gardens: [{ name:'Dreaming Gardens', address: '5712 32nd Ave', lat: '38', lng: '-129' }]
-	//   };
-	//   g.getAll = function() {
- //    	return $http.get('/gardens').success(function(data){
- //      angular.copy(data, g.gardens);
- //    })
-	// }])
 
-	.controller('GardensShowCtrl', ['$scope','$stateParams','gardens', function($scope, $stateParams, gardens){
+	.controller('GardensShowCtrl', ['$scope','$stateParams', function($scope, $stateParams){
 		$scope.garden = gardens.gardens[$stateParams.id];
 	}])
 	
 	.controller('NewGardenCtrl', function ($scope, $http) {
 		var gardens = [];
 
-		var request = $http.post('api/', garden);
+		var request = $http.post('api/gardens', garden);
 
 			request.success(function (data) {
 			    console.log(data); 

@@ -1,43 +1,69 @@
+'use strict';
+
 angular.module('meanGarden')
-	.controller('NewGardenCtrl', function ($scope, $http) {
 
-		var gardens = [];
+.controller('GardenCrudCtrl', ['$scope', '$stateParams', '$location', 'Gardens',
+	function($scope, $stateParams, $location, Gardens) {
+		
+		$scope.create = function() {
+	
+			var garden = new Garden ({
+				name: this.name
+				address: this.address
+			});
 
-		//adds garden to page
-		$scope.addGarden = function(){
-		  $scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
+			garden.$save(function(response) {
+				$scope.garden = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 
-	});
-			
-		// //creates new garden, also located in routes folder (?)
-		// $scope.createGarden = function () {
-		// 	var garden = new Garden(req.body);
+		$scope.remove = function(garden) {
+			if ( garden ) { 
+				garden.$remove();
 
-		// 	garden.save(function(err, status, data) {
-		// 			if (err) {
-		// 				console.log(status)
-		// 			} else {
-		// 				console.log(data);
-		// 			}
-		// 	});
-		// };
+				for (var i in $scope.gardens) {
+					if ($scope.gardens [i] === garden) {
+						$scope.gardens.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.garden.$remove(function() {
+					$location.path('/');
+				});
+			}
+		};
 
-		// post to db - where does this actually go?
-		// $http.post('/gardens', {'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});
-		// 	$scope.garden = '';
-			  
-		// 	  .success(function(data){
-		// 	    console.log(data);
-		// 	  });				  
-		// 	  .error(function(status){
-		// 	    console.log(status);
-		// 		});  
-		// };
+		$scope.update = function() {
+			var garden = $scope.garden;
+
+			garden.$update(function() {
+				$location.path('gardens-new/' + garden._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.find = function() {
+			$scope.gardens = Gardens.query();
+		};
+
+		$scope.findOne = function() {
+			$scope.garden = Gardens.get({ 
+				gardenId: $stateParams.gardenId
+			});
+		};
+	}
+]);
+
 			
-		// 	get from db
-		// 	$http.get('/gardens').success(function(allGardens) {
-		// 	     $scope.allGardens = allGardens;
-		//     	});
-	 // })							
-		// 		
+	// .factory('gardens', ['$http', function(){
+	//   var g = {
+	//     gardens: [{ name:'Dreaming Gardens', address: '5712 32nd Ave', lat: '38', lng: '-129' }]
+	//   };
+	//   g.getAll = function() {
+ //    	return $http.get('/gardens').success(function(data){
+ //      angular.copy(data, g.gardens);
+ //    })
+	// }])

@@ -1,14 +1,14 @@
 
-<div class="col-sm-6">
-      <div class="list-group">
-        <div class='list-group-item' ng-repeat="garden in greatGardens">
-          <h5>{{garden.name}}</h5>
-          <p>{{garden.address}}: {{garden.lng}}, {{garden.lat}}</p>
-          <button type="button" ng-click="removeGarden(garden)">&times;</button></a></li>
-        </div>
-      </div>
+<div class="row">
+    <div class="col-sm-6">
+      {{hello}}
+        <map zoom="12" 
+          center="37.774929, -122.419416" 
+          map-type-id="TERRAIN">
+        </map>
     </div>
 
+<div class="col-sm-6">
 <form ng-submit="addGarden()">
   <p class="input-group">
     <div>
@@ -19,7 +19,7 @@
       <label>Address</label>
       <input type="text" class="form-control" ng-model="garden.description" placeholder="Address">
       <span class="help-block"></span>
-<!-- 
+
       <label>Latitude</label>
       <input type="text" class="form-control" ng-model="garden.address" placeholder="testing">
       <span class="help-block"></span>
@@ -27,9 +27,21 @@
       <label>Longitude</label>
       <input type="text" class="form-control" ng-model="garden.neighborhood" placeholder="testing">
       <span class="help-block"></span>
-       -->
+      
 
       <button type="submit" class="btn btn-primary">Add New</button>
     </div>
   </p>  
 </form>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+      <div class="list-group">
+        <div class='list-group-item' ng-repeat="garden in greatGardens">
+          <h5>{{garden.name}}</h5>
+          <p>{{garden.address}}: {{garden.lng}}, {{garden.lat}}</p>
+          <button type="button" ng-click="removeGarden(garden)">&times;</button></a></li>
+        </div>
+      </div>
+    </div>
+</div>

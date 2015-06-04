@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var GardenSchema = new mongoose.Schema({
   name: String,
   address: String,
+  lat: String,
+  lng: String
 });
 
 var Garden = mongoose.model('Garden', GardenSchema);

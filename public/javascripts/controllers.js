@@ -1,7 +1,7 @@
 angular.module('meanGarden')
 
 
-	.controller('GardensShowCtrl', ['$scope','$stateParams', function($scope, $stateParams){
+	.controller('GardensShowCtrl', ['$scope','$stateParams', 'map', function($scope, $stateParams){
 		$scope.garden = gardens.gardens[$stateParams.id];
 	}])
 
@@ -10,7 +10,9 @@ angular.module('meanGarden')
     $scope.gardens = [
     	{
 	    	name: $scope.name,
-	    	address: $scope.address
+	    	address: $scope.address,
+	    	lat: $scope.lat,
+	    	lng: $scope.lng
     	}
     ];
 
@@ -23,6 +25,7 @@ angular.module('meanGarden')
     
     $scope.addGarden = function(){
     	$http.post('/api/gardens', $scope.garden).success(function(data) {
+    	$scope.addMarker($scope.garden.lat, $scope.garden.lng);	
       console.log(data);
       });  
     }
@@ -36,6 +39,32 @@ angular.module('meanGarden')
 		}
 
 	})
+
+	.directive('map', function () {
+		return {
+		  template: '<div></div>',
+		  restrict: 'EA',
+		  replace: true,
+		  link: function (scope, element) {
+
+    scope.markers = [];
+
+    scope.map = new google.maps.Map(element[0], {
+      center: new google.maps.LatLng(37.774929, -122.419416),
+      zoom: 11
+    });
+
+    scope.addMarker = function (lat, lng) {
+      var marker = new google.maps.Marker({
+        map: scope.map,
+        position:  new google.maps.LatLng(lat, lng)
+      });
+
+      scope.markers.push(marker);
+    };
+  }
+  }
+})
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 

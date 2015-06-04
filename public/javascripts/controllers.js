@@ -1,69 +1,70 @@
 angular.module('meanGarden')
 
 
-	.controller('GardensShowCtrl', ['$scope','$stateParams', function($scope, $stateParams){
+	.controller('GardensShowCtrl', ['$scope','$stateParams', 'map', function($scope, $stateParams){
 		$scope.garden = gardens.gardens[$stateParams.id];
 	}])
-	
-	.controller('NewGardenCtrl', function ($scope, $http) {
-		var gardens = [];
 
-		var request = $http.post('api/gardens', garden);
+	.controller('NewGardenCtrl', function ($scope, $http, $location) {
+    
+    $scope.gardens = [
+    	{
+	    	name: $scope.name,
+	    	address: $scope.address,
+	    	lat: $scope.lat,
+	    	lng: $scope.lng
+    	}
+    ];
 
-			request.success(function (data) {
-			    console.log(data); 
-			});
+    $scope.greatGardens = [];
 
-			request.error(function (data) {
-			    console.log(data);
-			})
-				
-		$scope.addGarden = function(){
-			if(!$scope.name || $scope.name === '') { return; }
-	  	$scope.gardens.push({'name':$scope.name, 'address':$scope.address, 'lat':$scope.lat, 'lng':$scope.lng});	
-		}
+    $http.get('/api/gardens').success(function(greatGardens) {
+      $scope.greatGardens = greatGardens;
+      // socket.syncUpdates('garden', $scope.greatGardens);
+    })
+    
+    $scope.addGarden = function(){
+    	$http.post('/api/gardens', $scope.garden).success(function(data) {
+    	$scope.addMarker($scope.garden.lat, $scope.garden.lng);	
+      console.log(data);
+      });  
+    }
 
 		$scope.removeGarden = function(item) { 
-		  var index = $scope.gardens.indexOf(item);
-		  $scope.gardens.splice(index, 1);     
+			$http.delete('api/gardens/', $scope.garden).success(function(data) {
+      console.log(data);
+    });
+		  var index = $scope.greatGardens.indexOf(item);
+		  $scope.greatGardens.splice(index, 1);     
 		}
-	 	
-	//  	$scope.getAll = function() {
- //    	return $http.get('/gardens').success(function(data){
- //      angular.copy(data, $scope.gardens);
-	//  	});
- //    }	
-	// })
-	 	 
-	//creates new garden, also located in routes folder (?)
-	// $scope.createGarden = function () {
-	// 	var garden = new Garden(req.body);
 
-	// 	garden.save(function(err, status, data) {
-	// 	// 		if (err) {
-	// 	// 			console.log(status);
-	// 	// 		} else {
-	// 	// 			console.log(data);
-	// 	// 		};
-	// 	// })
-	// }
-
-		//post to db 
-		$scope.garden = {};
-		$http.post('/api/gardens', $scope.garden)
-		  .success(function(data){
-		  	// $scope.garden = data;
-		    console.log(data);
-		  })
-		  .error(function(status){
-		    console.log(status);
-			});  			
-	// 		// get from db
-	// 		// $http.get('/gardens').success(function(allGardens) {
-	// 		//      $scope.gardens = allGardens;
-	// 	  //   	});
-	//  })							
 	})
+
+	.directive('map', function () {
+		return {
+		  template: '<div></div>',
+		  restrict: 'EA',
+		  replace: true,
+		  link: function (scope, element) {
+
+    scope.markers = [];
+
+    scope.map = new google.maps.Map(element[0], {
+      center: new google.maps.LatLng(37.774929, -122.419416),
+      zoom: 11
+    });
+
+    scope.addMarker = function (lat, lng) {
+      var marker = new google.maps.Marker({
+        map: scope.map,
+        position:  new google.maps.LatLng(lat, lng)
+      });
+
+      scope.markers.push(marker);
+    };
+  }
+  }
+})
 
  	.controller('GardenIndexCtrl', function ($scope, $http) {
 
